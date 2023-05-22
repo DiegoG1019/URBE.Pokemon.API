@@ -1,0 +1,24 @@
+﻿@page
+@using PokeApiNet;
+@inject PokeApiClient PokeApi
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    var resources = (await PokeApi.GetNamedResourcePageAsync<Pokemon>(100, 100 * Model.PageIndex)).Results;
+}
+
+<div class="text-center">
+    @foreach (var poke in await PokeApi.GetResourceAsync(resources)) 
+    {
+        @if (poke is null) { continue; }
+        <a href="/Pokemon?pokemonId=@(poke.Id)">@(poke.Name)</a>
+    }
+</div>
+
+
+<hr />
+<a href="/index?pokePage=@(Model.PageIndex + 1)">Siguiente</a>
+@if (Model.PageIndex > 0)
+{
+    <a href="/index?pokePage=@(Model.PageIndex - 1)">Anterior</a>
+}

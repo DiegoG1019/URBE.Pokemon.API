@@ -1,0 +1,68 @@
+﻿@page
+@model URBE.Pokemon.API.Pages.PokemonModel
+@using PokeApiNet;
+@inject PokeApiClient PokeApi
+
+@if (Model.PokemonId is int pokeid)
+{
+    var Pokemon = await PokeApi.GetResourceAsync<Pokemon>(pokeid);
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1>@(char.ToUpper(Pokemon.Name[0]))@(Pokemon.Name[1..])</h1>
+            </div>
+            <div class="col-sm">
+                <h1>#@(Pokemon.Id)</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">s
+                <img class="pokesprite" src="@Pokemon.Sprites.FrontDefault" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">s
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Peso</th>
+                            <th scope="col">Altura</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@(Pokemon.Weight)</td>
+                            <td>@(Pokemon.Height)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                @if (pokeid > 1)
+                                {
+                                    <a href="/pokemon?pokemonId=@(pokeid - 1)">Anterior</a>
+                                }
+                            </th>
+                            <th scope="col">
+                                <a href="/pokemon?pokemonId=@(pokeid + 1)">Siguiente</a>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else{
+    @foreach (var error in Model.Errors)
+    {
+        <span style="color:red">@error</span>
+    }
+}

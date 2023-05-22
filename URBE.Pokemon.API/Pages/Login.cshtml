@@ -1,0 +1,37 @@
+﻿@page
+@model URBE.Pokemon.API.Pages.LoginModel
+
+@{
+    
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form</title>
+</head>
+<body>
+    <form method="post">
+        <fieldset>
+            <legend>Logs in as a specific user</legend>
+            <div>
+                <label for="Username">Username or Email:</label>
+                <input type="text" name="Username" value="" placeholder="..." />
+            </div>
+            <div>
+                <label for="Password">Password:</label>
+                <input type="password" name="Password" value="" placeholder="..."/>
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <input type="submit" value="Submit" class="submit" />
+            </div>
+        </fieldset>
+    </form>
+    @foreach (var error in Model.Errors)
+    {
+        <span style="color:red">@error</span>
+    }
+    <a href="/CreateUser">Create new User</a>
+</body>
+</html>
